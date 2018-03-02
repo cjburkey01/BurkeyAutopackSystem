@@ -1,0 +1,16 @@
+[
+{
+  "modid": "${modid}",
+  "name": "Burkey Autopack System",
+  "description": "Automated modpack management.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://cjburkey.com/autopack/",
+  "updateUrl": "",
+  "authorList": ["CJ Burkey"],
+  "credits": "The Forge and FML guys, for making forge.",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

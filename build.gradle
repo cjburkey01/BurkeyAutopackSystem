@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
+version = "1.0.3"
+group = "com.cjburkey.autopacker"
+archivesBaseName = "autopacker"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "1.12.2-14.23.2.2619"
+    runDir = "run"
+    mappings = "snapshot_20171003"
+}
+
+dependencies {
+	// LaFs
+    embed files("lib/weblaf-complete-1.28.jar")
+    embed files("lib/pgslookandfeel-1.1.2.jar")
+    embed files("lib/liquidlnf.jar")
+    
+    // Libs
+    embed "org.reflections:reflections:0.9.11"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    inputs.property "modid", project.archivesBaseName
+    
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version, 'modid':project.archivesBaseName
+    }
+    
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'com.cjburkey.autopacker.asm.UpdateSystemLoader'
+        attributes 'FMLCorePluginContainsMod': 'true'
+    }
+    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+}
