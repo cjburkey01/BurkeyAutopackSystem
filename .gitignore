@@ -16,12 +16,11 @@ out
 # gradle
 build
 .gradle
-
-# other
-eclipse
-run
-
 gradle/
 *.DS_Store
 gradlew
 gradlew.bat
+
+# forge
+eclipse
+run
